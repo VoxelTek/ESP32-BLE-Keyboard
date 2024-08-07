@@ -128,11 +128,10 @@ void BleKeyboard::begin(void)
 
   BLESecurity* pSecurity = new BLESecurity();
  
- //eğer kart esp32s3 veya esp32c3 ise bu kod bloğu çalışır
 #if defined(CONFIG_IDF_TARGET_ESP32S3) || defined(CONFIG_IDF_TARGET_ESP32C3)
   pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
 #else
-  pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND | ESP_LE_AUTH_REQ_SC_MITM_BOND);
+  pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
 #endif
 
 
