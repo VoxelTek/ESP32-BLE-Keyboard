@@ -127,7 +127,13 @@ void BleKeyboard::begin(void)
 #else
 
   BLESecurity* pSecurity = new BLESecurity();
-  pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
+   if (CONFIG_IDF_TARGET_ESP32C3 || CONFIG_IDF_TARGET_ESP32S3)
+  {
+	pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
+  }
+  else{
+	pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
+  }
 
 #endif // USE_NIMBLE
 
