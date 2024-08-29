@@ -27,12 +27,15 @@
 #endif // USE_NIMBLE
 
 #include "Print.h"
+#include "USBHIDKeyboard.h"
 
 #define BLE_KEYBOARD_VERSION "0.0.4"
 #define BLE_KEYBOARD_VERSION_MAJOR 0
 #define BLE_KEYBOARD_VERSION_MINOR 0
 #define BLE_KEYBOARD_VERSION_REVISION 4
 
+
+/*
 const uint8_t KEY_LEFT_CTRL = 0x80;
 const uint8_t KEY_LEFT_SHIFT = 0x81;
 const uint8_t KEY_LEFT_ALT = 0x82;
@@ -99,6 +102,7 @@ const uint8_t KEY_NUM_MINUS = 0xDE;
 const uint8_t KEY_NUM_PLUS = 0xDF;
 const uint8_t KEY_NUM_ENTER = 0xE0;
 const uint8_t KEY_NUM_PERIOD = 0xEB;
+*/
 
 typedef uint8_t MediaKeyReport[2];
 
@@ -120,13 +124,6 @@ const MediaKeyReport KEY_MEDIA_CONSUMER_CONTROL_CONFIGURATION = {0, 64}; // Medi
 const MediaKeyReport KEY_MEDIA_EMAIL_READER = {0, 128};
 
 
-//  Low level key report: up to 6 keys and shift, ctrl etc at once
-typedef struct
-{
-  uint8_t modifiers;
-  uint8_t reserved;
-  uint8_t keys[6];
-} KeyReport;
 
 class BleKeyboard : public Print, public BLEServerCallbacks, public BLECharacteristicCallbacks
 {
@@ -138,8 +135,8 @@ private:
   BLEAdvertising*    advertising;
   KeyReport          _keyReport;
   MediaKeyReport     _mediaKeyReport;
-  std::string        deviceName;
-  std::string        deviceManufacturer;
+  String             deviceName;
+  String             deviceManufacturer;
   uint8_t            batteryLevel;
   bool               connected = false;
   uint32_t           _delay_ms = 7;
@@ -150,7 +147,7 @@ private:
   uint16_t version   = 0x0210;
 
 public:
-  BleKeyboard(std::string deviceName = "ESP32 Keyboard", std::string deviceManufacturer = "Espressif", uint8_t batteryLevel = 100);
+  BleKeyboard(String deviceName = "ESP32 Keyboard", String deviceManufacturer = "Espressif", uint8_t batteryLevel = 100);
   void begin(void);
   void end(void);
   void sendReport(KeyReport* keys);
@@ -165,7 +162,7 @@ public:
   void releaseAll(void);
   bool isConnected(void);
   void setBatteryLevel(uint8_t level);
-  void setName(std::string deviceName);  
+  void setName(String deviceName);
   void setDelay(uint32_t ms);
 
   void set_vendor_id(uint16_t vid);
