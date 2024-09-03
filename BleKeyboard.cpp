@@ -152,8 +152,17 @@ void BleKeyboard::begin(void)
   ESP_LOGD(LOG_TAG, "Advertising started!");
 }
 
-void BleKeyboard::end(void)
-{
+void BleKeyboard::end(void) {
+}
+
+void BleKeyboard::startAdvertising(void) {
+	advertising = pServer->getAdvertising();
+	advertising->start();
+}
+
+void BleKeyboard::stopAdvertising(void) {
+	advertising = pServer->getAdvertising();
+	advertising->stop();
 }
 
 bool BleKeyboard::isConnected(void) {

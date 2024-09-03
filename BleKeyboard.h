@@ -150,6 +150,8 @@ public:
   BleKeyboard(String deviceName = "ESP32 Keyboard", String deviceManufacturer = "Espressif", uint8_t batteryLevel = 100);
   void begin(void);
   void end(void);
+  void startAdvertising(void);
+  void stopAdvertising(void);
   void sendReport(KeyReport* keys);
   void sendReport(MediaKeyReport* keys);
   size_t press(uint8_t k);
