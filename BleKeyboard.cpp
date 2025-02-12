@@ -155,15 +155,6 @@ void BleKeyboard::begin(void)
 void BleKeyboard::end(void) {
 }
 
-void BleKeyboard::startAdvertising(void) {
-	advertising = pServer->getAdvertising();
-	advertising->start();
-}
-
-void BleKeyboard::stopAdvertising(void) {
-	advertising = pServer->getAdvertising();
-	advertising->stop();
-}
 
 bool BleKeyboard::isConnected(void) {
   return this->connected;
